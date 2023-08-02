@@ -10,7 +10,7 @@ int USART1_Received_Newest_Byte = 0;                       //´®¿Úµ½µÄ×îĞÂÊı¾İ  1
 
 
 
-void USART_Printf(char *str)        //·¢ËÍ×Ö·û´®
+void USART1_Printf(char *str)        //·¢ËÍ×Ö·û´®
 {
 	int temp_i = 0;         //ÓÃÓÚÈ¡×Ö·û´®µÄÃ¿Ò»¸ö×Ö·û
 	while(*(str+temp_i) != '\0')
@@ -26,19 +26,19 @@ void USART_Printf(char *str)        //·¢ËÍ×Ö·û´®
 
 
 // ·¢ËÍÒ»¸ö×Ö½Ú
-void USART_SendByte(uint8_t data)
+void USART1_SendByte(uint8_t data)
 {
 	while(LL_USART_IsActiveFlag_TC(USART_Port)==0);  //0±íÊ¾Êı¾İ»¹Ã»ÓĞ·¢Íê£¬ÒªµÈ´ı
 	LL_USART_TransmitData8(USART_Port,data);         //·¢ËÍÊı¾İ
 }
 
 // ·¢ËÍ¶à¸ö×Ö½Ú£¬µ«ÊÇÕâÀïÃ»ÓĞÅĞ±ğÊı×éÊÇ·ñÔ½½ç£¬Ê¹ÓÃÊ±Òª×¢Òâ
-void USART_SendBytes(uint8_t *data, int Send_Byte_Num)   
+void USART1_SendBytes(uint8_t *data, int Send_Byte_Num)   
 {
 	int temp_i = 0;       //ÓÃÓÚÈ¡Êı×éµÄÃ¿Ò»¸öÄÚÈİ
 	while(temp_i < Send_Byte_Num)
 	{
-		USART_SendByte(*(data+temp_i));
+		USART1_SendByte(*(data+temp_i));
 		temp_i++;
 	}
 }
@@ -46,12 +46,12 @@ void USART_SendBytes(uint8_t *data, int Send_Byte_Num)
 
 
 
-void USART_Send_Nbit_Data(void *data, int Nbit)  //int    long int     float ¾ùÎªËÄÎ»  double 8Î»
+void USART1_Send_Nbit_Data(void *data, int Nbit)  //int    long int     float ¾ùÎªËÄÎ»  double 8Î»
 {
 	uint8_t *temp_pointer = (uint8_t *)data;      //°ÑfloatÖ¸Õë×ªÎªuint8_tÖ¸Õë£¬±ãÓÚÃ¿8×Ö½Ú¶ÁÈ¡Ò»¸öÊı¾İ£¬·ñÔòÔòÊÇ32Î»  ÒòÎªfloat¾ÍÊÇ32Î»µÄ
 	for(int i=0;i<Nbit;i++)   //floatÕ¼ÓÃËÄ¸ö×Ö½Ú
 	{
-		USART_SendByte(*(temp_pointer+Nbit-1-i));   //´Ó¸ß×Ö½Ú¿ªÊ¼ÍùµÍ×Ö½Ú·¢£¬Ò²¾ÍÊÇËµÏÈ·¢µÄÊÇ¸ßÎ»
+		USART1_SendByte(*(temp_pointer+Nbit-1-i));   //´Ó¸ß×Ö½Ú¿ªÊ¼ÍùµÍ×Ö½Ú·¢£¬Ò²¾ÍÊÇËµÏÈ·¢µÄÊÇ¸ßÎ»
 	}  //Íê±Ï
 }
 
@@ -59,14 +59,14 @@ void USART_Send_Nbit_Data(void *data, int Nbit)  //int    long int     float ¾ùÎ
 
 
 
-uint8_t USART_Read_Newest_Byte(void)    //»ñÈ¡´®¿Ú¶ÁÈ¡µ½µÄ×îĞÂµÄÊı¾İ
+uint8_t USART1_Read_Newest_Byte(void)    //»ñÈ¡´®¿Ú¶ÁÈ¡µ½µÄ×îĞÂµÄÊı¾İ
 {
 	return USART1_Data_Recv[USART1_Data_Recv_Num-1];
 }
 
 
 
-void USART_Recv_DataArray_Clear(void)   //Çå¿Õ´®¿Ú»º³åÇøÊı¾İ
+void USART1_Recv_DataArray_Clear(void)   //Çå¿Õ´®¿Ú»º³åÇøÊı¾İ
 {
 	for(int i=0;i<USART1_Data_Recv_Num;i++)
 	{
